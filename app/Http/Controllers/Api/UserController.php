@@ -4,24 +4,26 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Reaction;
 use App\Models\User;
+use GuzzleHttp\Psr7\Message;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
     public function list(){
-        $users = Users::all();
+        $users = User::all();
         $list = [];
 
         foreach($users as $user){
             $object = [
                 "id" => $user->id,
                 "name" => $user->name,
-                "email" => $user->email,
-                "email_verified_at" => $user->email_verified_at,
-                "password" => $user->password,
-                "remember_token" => $user->remember_token,
+                "email"=> $user->email,
                 "created_at" => $user->created_at,
-                "update_at"=> $user->update_at
+                "email_verified_at" => $user->email_verified_at,
+                "updated_at" => $user->updated_at,
             ];
             
             array_push($list, $object);
@@ -31,76 +33,79 @@ class UserController extends Controller
     }
 
     public function item($id){
-            $user = User::where('id', '=', $id)->first();
+        $user = User::where('id', '=', $id)->first();
                 $object = [
                     "id" => $user->id,
                     "name" => $user->name,
-                    "email" => $user->email,
-                    "email_verified_at" => $user->email_verified_at,
-                    "password" => $user->password,
-                    "remember_token" => $user->remember_token,
+                    "email"=> $user->email,
                     "created_at" => $user->created_at,
-                    "update_at"=> $user->update_at
+                    "email_verified_at" => $user->email_verified_at,
+                    "updated_at" => $user->updated_at,
                 ];
             return response()->json($object);
     }
 
-    public function create(Request $request)
-    {
-        $data = $request->validate([
-            'user' => 'required'
-        ]);
+    public function update(Request $request){
+        $data = $request -> validate([
+            'id' => 'required|numeric',
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
 
-        $user=User::create([
-            'user' => $data['user']
         ]);
-        if($user){
-            return response()->json([
-                'message' => 'Se ha creado un registro',
-                'data' => $user
-            ]);
-        }else{
-            return response()->json([
-                'message' => 'Error al crear el registro',
-            ]);
-        }}
-        
-        public function update(Request $request){
-            
-            $data = $request->validate([
-                'id' => 'required|integer|min1',
-                'name' => 'required',
-                'email' => 'required',
-                'email_verified_at' => 'required',
-                'password' => 'required',
-                'remember_token' => 'required'
+   
+        $user = User::where('id', '=', $data['id'])->first();
+
+        if($user) {
+            $old = clone $user;
+
+            $user -> name = $data['name'];
+            $user -> email = $data['email'];
+            $user -> password = $data['password'];
+
+
+            if($user->save()){
+                return response() ->json([
+                    'message' => 'Usuario creada correctamente',
+                    'old' => $old,
+                    'new' => $user
                 ]);
-    
-                $user = User::where('id', '=', $data['id'])->first();
-    
-                if($user){
-                    $user->date=$data['name'];
-                    if($user->save()){
-                        $object =
-                        [
-                            "response" => 'susces, Item update correctly',
-                            "old" => $old,
-                            "new" => $date,
-                        ];
-                        return response()->json($object);
-                    }else{
-                        $object =
-                        [
-                            "response" =>'Error: stupid',
-                        ];
-                        return response()->json($object);
-                    }
-                }else{
-                    $object = 
-                    [
-                        "response" => 'Error: stupid'
-                    ];
-                    return response()->json($object);
+            }else{
+                return response() ->json([
+                    'message' => 'Error al crear una usuario',
+                ]);
+            }
+        }else{
+            return response() ->json([
+                'message' => 'Elemento no encontrado',
+            ]);
         }
     }
-} 
+
+    public function create(Request $request){
+        $data = $request -> validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+
+        ]);
+
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+
+        if($user) {
+            return response() ->json([
+                'message' => 'Usuario creada correctamente',
+                'data' => $user
+            ]);
+
+        }else{
+            return response() ->json([
+                'message' => 'Error al crear un usuario',
+            ]);
+        }
+    }
+}

@@ -43,64 +43,72 @@ class ComplaintController extends Controller
             return response()->json($object);
     }
 
-    public function create(Request $request)
-    {
-        $data = $request->validate([
-            'complaint' => 'required'
-        ]);
-
-        $complaint=Complaint::create([
-            'complaint' => $data['complaint']
-        ]);
-        if($complaint){
-            return response()->json([
-                'message' => 'Se ha creado un registro',
-                'data' => $complaint
-            ]);
-        }else{
-            return response()->json([
-                'message' => 'Error al crear el registro',
-            ]);
-        }
-    }
-    
     public function update(Request $request){
-        
-        $data = $request->validate([
-            'id' => 'required|integer|min1',
+        $data = $request -> validate([
+            'id' => 'required|numeric',
             'name' => 'required',
             'categories' => 'required',
             'suspects' => 'required',
-            'places' => 'required'
+            'places' => 'required',
+        ]);
+   
+        $complaint = Complaint::where('id', '=', $data['id'])->first();
+
+        if($complaint) {
+            $old = clone $complaint;
+
+            $complaint -> name = $data['name'];
+            $complaint -> categories = $data['categories'];
+            $complaint -> suspects = $data['suspects'];
+            $complaint -> places = $data['places'];
+
+
+            if($user->save()){
+                return response() ->json([
+                    'message' => 'successfully created complaint',
+                    'old' => $old,
+                    'new' => $user
+                ]);
+            }else{
+                return response() ->json([
+                    'message' => 'Error creating a complaint',
+                ]);
+            }
+        }else{
+            return response() ->json([
+                'message' => 'Item not found',
+            ]);
+        }
+    }
+
+    public function create(Request $request){
+        $data = $request -> validate([
+            'name' => 'required',
+            'categories' => 'required',
+            'suspects' => 'required',
+            'places' => 'required',
+
+        ]);
+
+        $complaint = Complaint::create([
+            'name' => $data['name'],
+            'categories' => $data['categories'],
+            'suspects' => $data['suspects'],
+            'places' => $data['places'],
+        ]);
+
+        if($complaint) {
+            return response() ->json([
+                'message' => 'successfully created complaint',
+                'data' => $complaint
             ]);
 
-            $complaint = Complaint::where('id', '=', $data['id'])->first();
-
-            if($complaint){
-                $complaint->date=$data['name'];
-                if($date->save()){
-                    $object =
-                    [
-                        "response" => 'susces, Item update correctly',
-                        "old" => $old,
-                        "new" => $date,
-                    ];
-                    return response()->json($object);
-                }else{
-                    $object =
-                    [
-                        "response" =>'Error: stupid',
-                    ];
-                    return response()->json($object);
-                }
-            }else{
-                $object = 
-                [
-                    "response" => 'Error: stupid'
-                ];
-                return response()->json($object);
-            }
+        }else{
+            return response() ->json([
+                'message' => 'Error creating a complaint',
+            ]);
         }
+    }
         public function Elements($id){
             $complaint = Complaint::where('complaint', '=', $complaint)->get();
             
@@ -119,4 +127,27 @@ class ComplaintController extends Controller
             
             return response()->json($object);
         }
-    }
+        public function SearchComplaints($userId, $searchTerm) {
+            $complaints = ModelComplaint::where('user_id', $userId)
+                ->whereHas('categories', function ($query) use ($searchTerm) {
+                    $query->where('buy', 'like', $searchTerm . '%'); // Busca por coincidencia con los primeros caracteres
+                })
+                ->latest()
+                ->get();
+        
+            $resultArray = [];
+        
+            foreach ($complaints as $complaint) {
+                $complaintDetails = [
+                    "id" => $complaint->id,
+                    "name" => $complaint->name,
+                    "categories" => $complaint->categories,
+                    "places" => $complaint->places,
+                    "suspects" => $complaint->suspects,
+                ];
+                $resultArray[] = $complaintDetails; // Agrega los detalles de la compra al array resultante
+            }
+        
+            return response()->json($resultArray); // Devuelve el array completo como JSON
+        } 
+}
