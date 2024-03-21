@@ -2,10 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\SuspectController;
-use App\Http\Controllers\Api\PlaceController;
+use App\Http\Controllers\Api\PeopleController;
+use App\Http\Controllers\Api\CrimeController;
 use App\Http\Controllers\Api\ComplaintController;
-use App\Http\Controllers\Api\CategorieController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 
@@ -23,15 +22,15 @@ use App\Http\Controllers\Api\UserController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/suspects',[SuspectController::class, 'list']);
-Route::get('/suspects/{id}', [SuspectController::class, 'item']);
-Route::post('/suspects/create', [SuspectController::class, 'create']);
-Route::post('/suspects/update', [SuspectController::class, 'update']);
+Route::get('/people',[PeopleController::class, 'list']);
+Route::get('/people/{id}', [PeopleController::class, 'item']);
+Route::post('/people/create', [PeopleController::class, 'create']);
+Route::post('/people/update', [PeopleController::class, 'update']);
 
-Route::get('/categories',[CategorieController::class, 'list']);
-Route::get('/categories/{id}', [CategorieController::class, 'item']);
-Route::post('/categories/create', [CategorieController::class, 'create']);
-Route::post('/categories/update', [SuspectController::class, 'update']);
+Route::get('/crime',[CrimeController::class, 'list']);
+Route::get('/crime/{id}', [CrimeController::class, 'item']);
+Route::post('/crime/create', [CrimeController::class, 'create']);
+Route::post('/crime/update', [CrimeController::class, 'update']);
 
 Route::get('/places',[PlaceController::class, 'list']);
 Route::get('/places/{id}', [PlaceController::class, 'item']);
@@ -61,6 +60,8 @@ Route::post('/info_sus/update', [Info_SusController::class, 'update']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::get('/Elements/{id}', [CategorieController::class, 'elements']);
+Route::get('/ListComplaintComplaint/{id}', [ComplaintController::class, 'ListUser']);
+Route::get('/SearchComplaints/{searchTerm}', [ComplaintController::class, 'SearchComplaints']);
 
 Route::get('/users',[UserController::class, 'list']);
 Route::get('/users/{id}', [UserController::class, 'item']);

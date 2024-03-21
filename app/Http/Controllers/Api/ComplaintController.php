@@ -8,17 +8,20 @@ use Illuminate\Http\Request;
 
 class ComplaintController extends Controller
 {
-    public function list(){
+    
+    public function list(Request $request){
         $complaints = Complaint::all();
         $list = [];
 
         foreach($complaints as $complaint){
             $object = [
                 "id" => $complaint->id,
-                "name" => $complaint->name,
-                "categories" => $complaint->categories,
-                "suspects" => $complaint->suspects,
-                "places" => $complaint->places,
+                "id_complaint" => $complaint->id_complaint,
+                "description" => $complaint->description,
+                "complaint_status" => $complaint->complaint_status,
+                "id_victim" => $complaint->id_victim,
+                "id_witness" => $complaint->id_witness,
+                "id_suspect" => $complaint->id_suspect,
                 "created_at" => $complaint->created_at,
                 "updated_at" => $complaint->updated_at
             ];
@@ -32,13 +35,15 @@ class ComplaintController extends Controller
     public function item($id){
             $complaint = Complaint::where('id', '=', $id)->first();
                 $object = [
-                "id" => $complaint->id,
-                "name" => $complaint->name,
-                "categories" => $complaint->categories,
-                "suspects" => $complaint->suspects,
-                "places" => $complaint->places,
-                "created_at" => $complaint->created_at,
-                "updated_at" => $complaint->updated_at
+                    "id" => $complaint->id,
+                    "id_complaint" => $complaint->id_complaint,
+                    "description" => $complaint->description,
+                    "complaint_status" => $complaint->complaint_status,
+                    "id_victim" => $complaint->id_victim,
+                    "id_witness" => $complaint->id_witness,
+                    "id_suspect" => $complaint->id_suspect,
+                    "created_at" => $complaint->created_at,
+                    "updated_at" => $complaint->updated_at
                 ];
             return response()->json($object);
     }
@@ -46,10 +51,12 @@ class ComplaintController extends Controller
     public function update(Request $request){
         $data = $request -> validate([
             'id' => 'required|numeric',
-            'name' => 'required',
-            'categories' => 'required',
-            'suspects' => 'required',
-            'places' => 'required',
+            'id_complaint' => 'required|numeric',
+            'description' => 'required',
+            'complaint_status' => 'required',
+            'id_victim' => 'required|numeric',
+            'id_witness' => 'required|numeric',
+            'id_suspect' => 'required|numeric',
         ]);
    
         $complaint = Complaint::where('id', '=', $data['id'])->first();
@@ -57,10 +64,12 @@ class ComplaintController extends Controller
         if($complaint) {
             $old = clone $complaint;
 
-            $complaint -> name = $data['name'];
-            $complaint -> categories = $data['categories'];
-            $complaint -> suspects = $data['suspects'];
-            $complaint -> places = $data['places'];
+            $complaint -> id_complaint = $data['id_complaint'];
+            $complaint -> description = $data['description'];
+            $complaint -> complaint_status = $data['complaint_status'];
+            $complaint -> id_victim = $data['id_victim'];
+            $complaint -> id_witness = $data['id_witness'];
+            $complaint -> id_suspect = $data['id_suspect'];
 
 
             if($user->save()){
@@ -83,18 +92,22 @@ class ComplaintController extends Controller
 
     public function create(Request $request){
         $data = $request -> validate([
-            'name' => 'required',
-            'categories' => 'required',
-            'suspects' => 'required',
-            'places' => 'required',
+            'id_complaint' => 'required|numeric',
+            'description' => 'required',
+            'complaint_status' => 'complaint_status',
+            'id_victim' => 'required|numeric',
+            'id_witness' => 'required|numeric',
+            'id_suspect' => 'required|numeric',
 
         ]);
 
         $complaint = Complaint::create([
-            'name' => $data['name'],
-            'categories' => $data['categories'],
-            'suspects' => $data['suspects'],
-            'places' => $data['places'],
+            'id_complaint' => $data['id_complaint'],
+            'description' => $data['description'],
+            'complaint_status' => $data['complaint_status'],
+            'id_victim' => $data['id_victim'],
+            'id_witness' => $data['id_witness'],
+            'id_suspect' => $data['id_suspect'],
         ]);
 
         if($complaint) {
@@ -116,10 +129,12 @@ class ComplaintController extends Controller
             foreach($complaint as $complaint){
                 $complaintArray = [
                     "id" => $complaint->id,
-                    "name" => $complaint->Name,
-                    "categories" => $complaint->Categories,
-                    "suspects" => $complaint->Suspects,
-                    "places" => $complaint->Places,
+                    "id_complaint" => $complaint->id_complaint,
+                    "description" => $complaint->description,
+                    "complaint_status" => $complaint->complaint_status,
+                    "id_victim" => $complaint->id_victim,
+                    "id_witness" => $complaint->id_witness,
+                    "id_suspect" => $complaint->id_suspect,
                     "created_at" => $complaint->Created_at,
                     "updated_at" => $complaint->Updated_at,
                 ];
@@ -127,27 +142,51 @@ class ComplaintController extends Controller
             
             return response()->json($object);
         }
-        public function SearchComplaints($userId, $searchTerm) {
-            $complaints = ModelComplaint::where('user_id', $userId)
-                ->whereHas('categories', function ($query) use ($searchTerm) {
-                    $query->where('buy', 'like', $searchTerm . '%'); // Busca por coincidencia con los primeros caracteres
-                })
-                ->latest()
-                ->get();
-        
+
+        public function SearchcComplaints($id, $searchTerm) {
+        $searchTerm = $request->query('search');
+        $query = Complaint::query();
+
+        if ($searchTerm) {
+            $query->where('id_complaint', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('description', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('complaint_status', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('id_victim', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('id_witness', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('id_suspect', 'like', '%' . $searchTerm . '%');
+        }
             $resultArray = [];
         
             foreach ($complaints as $complaint) {
                 $complaintDetails = [
                     "id" => $complaint->id,
-                    "name" => $complaint->name,
-                    "categories" => $complaint->categories,
-                    "places" => $complaint->places,
-                    "suspects" => $complaint->suspects,
+                    "id_complaint" => $complaint->id_complaint,
+                    "description" => $complaint->description,
+                    "complaint_status" => $complaint->complaint_status,
+                    "id_victim" => $complaint->id_victim,
+                    "id_witness" => $complaint->id_witness,
+                    "id_suspect" => $complaint->id_suspect,
                 ];
                 $resultArray[] = $complaintDetails; // Agrega los detalles de la compra al array resultante
             }
         
             return response()->json($resultArray); // Devuelve el array completo como JSON
-        } 
+        }
+        public function ListUser($id){
+            $complaint = complaint::where('id', $id)->get();
+            $complaintArray = [];
+            foreach ($complaints as $complaint) {
+                $complaintArray[] = [
+                    "id" => $complaint->id,
+                    "id_complaint" => $complaint->id_complaint,
+                    "description" => $complaint->description,
+                    "complaint_status" => $complaint->complaint_status,
+                    "id_victim" => $complaint->id_victim,
+                    "id_witness" => $complaint->id_witness,
+                    "id_suspect" => $complaint->id_suspect,
+                ];
+            }    
+        
+            return response()->json($complaintArray);
+        }
 }

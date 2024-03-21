@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Info_Sus extends Model
+class People extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
+        'id_people',
+        'full_name',
         'age',
-        'ocupation',
-        'description',
-        'background',
-        'addres',
+        'address',
+        'city',
+        'phone',
+        'email',
     ];
 }

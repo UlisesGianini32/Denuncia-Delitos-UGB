@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('complaints', function (Blueprint $table) {
             $table->id('id');
-            $table->string('name');
-            $table->string('categories');
-            $table->string('suspects');
-            $table->string('places');
+            $table->integer('id_complaint');
+            $table->string('description');
+            $table->string('complaint_status');
+            $table->integer('id_victim');
+            $table->integer('id_witness');
+            $table->integer('id_suspect');
             $table->timestamps();
         });
     }
