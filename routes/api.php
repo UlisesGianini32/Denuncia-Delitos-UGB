@@ -32,30 +32,10 @@ Route::get('/crime/{id}', [CrimeController::class, 'item']);
 Route::post('/crime/create', [CrimeController::class, 'create']);
 Route::post('/crime/update', [CrimeController::class, 'update']);
 
-Route::get('/places',[PlaceController::class, 'list']);
-Route::get('/places/{id}', [PlaceController::class, 'item']);
-Route::post('/places/create', [PlaceController::class, 'create']);
-Route::post('/places/update', [SuspectController::class, 'update']);
-
 Route::get('/complaints',[ComplaintController::class, 'list']);
 Route::get('/complaints/{id}', [ComplaintController::class, 'item']);
 Route::post('/complaints/create', [ComplaintController::class, 'create']);
 Route::post('/complaints/update', [ComplaintController::class, 'update']);
-
-Route::get('/alerts',[AlertsController::class, 'list']);
-Route::get('/alerts/{id}', [AlertsController::class, 'item']);
-Route::post('/alerts/create', [AlertsController::class, 'create']);
-Route::post('/alerts/update', [AlertsController::class, 'update']);
-
-Route::get('/info_com',[Info_ComController::class, 'list']);
-Route::get('/info_com/{id}', [Info_ComController::class, 'item']);
-Route::post('/info_com/create', [Info_ComController::class, 'create']);
-Route::post('/info_com/update', [Info_ComController::class, 'update']);
-
-Route::get('/info_sus',[Info_SusController::class, 'list']);
-Route::get('/info_sus/{id}', [Info_SusController::class, 'item']);
-Route::post('/info_sus/create', [Info_SusController::class, 'create']);
-Route::post('/info_sus/update', [Info_SusController::class, 'update']);
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
