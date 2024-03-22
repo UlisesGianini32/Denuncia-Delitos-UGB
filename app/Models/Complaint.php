@@ -9,11 +9,11 @@ class Complaint extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_complaint',
+        'complaint_id',
         'description',
         'complaint_status',
-        'id_victim',
-        'id_witness',
-        'id_suspect'
+        'victim_id',
+        'witness_id',
+        'suspect_id'
     ];
 }

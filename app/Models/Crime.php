@@ -9,7 +9,7 @@ class Crime extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_complaint',
+        'complaint_id',
         'crime_name',
         'crime_description'
     ];

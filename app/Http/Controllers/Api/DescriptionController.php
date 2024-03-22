@@ -15,7 +15,7 @@ class DescriptionController extends Controller
         foreach($descriptions as $description){
             $object = [
                 "id" => $description->id,
-                "id_complaint" => $description->id_complaint,
+                "complaint_id" => $description->complaint_id,
                 "description" => $description->description,
                 "created_at" => $description->created_at,
                 "updated_at" => $description->updated_at
@@ -31,7 +31,7 @@ class DescriptionController extends Controller
             $description = Description::where('id', '=', $id)->first();
                 $object = [
                 "id" => $description->id,
-                "id_complaint" => $description->id_complaint,
+                "complaint_id" => $description->complaint_id,
                 "description" => $description->description,
                 "created_at" => $crime->created_at,
                 "updated_at" => $crime->updated_at
@@ -42,7 +42,7 @@ class DescriptionController extends Controller
     public function update(Request $request){
         $data = $request -> validate([
             'id' => 'required|numeric',
-            'id_complaint' => 'required|numeric',
+            'complaint_id' => 'required|numeric',
             'description' => 'required',
         ]);
    
@@ -51,7 +51,7 @@ class DescriptionController extends Controller
         if($description) {
             $old = clone $description;
 
-            $description -> id_complaint = $data['id_complaint'];
+            $description -> complaint_id = $data['complaint_id'];
             $description -> description = $data['description'];
         
             if($user->save()){
@@ -75,12 +75,12 @@ class DescriptionController extends Controller
 
     public function create(Request $request){
         $data = $request -> validate([
-            'id_complaint' => 'required|numeric',
+            'complaint_id' => 'required|numeric',
             'description' => 'required',
         ]);
 
         $crime = Crime::create([
-            'id_complaint' => $data['id_complaint'],
+            'complaint_id' => $data['complaint_id'],
             'description' => $data['description'],
         ]);
 
@@ -103,7 +103,7 @@ class DescriptionController extends Controller
             foreach($descriptions as $description){
                 $descriptionArray = [
                     "id" => $description->id,
-                    "id_complaint" => $description->id_complaint,
+                    "complaint_id" => $description->complaint_id,
                     "description" => $description->description,
                     "created_at" => $description->Created_at,
                     "updated_at" => $description->Updated_at,
@@ -119,7 +119,7 @@ class DescriptionController extends Controller
             foreach ($descriptions as $description) {
                 $descriptionArray[] = [
                     "id" => $description->id,
-                    "id_complaint" => $description->id_complaint,
+                    "complaint_id" => $description->complaint_id,
                     "description" => $description->description,
                 ];
             }    

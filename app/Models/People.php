@@ -9,7 +9,7 @@ class People extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_people',
+        'people_id',
         'full_name',
         'age',
         'address',

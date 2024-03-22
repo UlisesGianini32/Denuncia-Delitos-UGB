@@ -15,7 +15,7 @@ class CrimeController extends Controller
         foreach($crimes as $crime){
             $object = [
                 "id" => $crime->id,
-                "id_complaint" => $crime->id_complaint,
+                "complaint_id" => $crime->complaint_id,
                 "crime_name" => $crime->crime_name,
                 "crime_description" => $crime->crime_description,
                 "created_at" => $crime->created_at,
@@ -32,7 +32,7 @@ class CrimeController extends Controller
             $crime = Crime::where('id', '=', $id)->first();
                 $object = [
                 "id" => $crime->id,
-                "id_complaint" => $crime->id_complaint,
+                "complaint_id" => $crime->complaint_id,
                 "crime_name" => $crime->crime_name,
                 "crime_description" => $crime->crime_description,
                 "created_at" => $crime->created_at,
@@ -44,7 +44,7 @@ class CrimeController extends Controller
     public function update(Request $request){
         $data = $request -> validate([
             'id' => 'required|numeric',
-            'id_complaint' => 'required|numeric',
+            'complaint_id' => 'required|numeric',
             'crime_name' => 'required',
             'crime_description' => 'required',
         ]);
@@ -54,7 +54,7 @@ class CrimeController extends Controller
         if($crime) {
             $old = clone $crime;
 
-            $crime -> id_complaint = $data['id_complaint'];
+            $crime -> complaint_id = $data['complaint_id'];
             $crime -> crime_name = $data['crime_name'];
             $crime -> crime_description = $data['crime_description'];
         
@@ -79,13 +79,13 @@ class CrimeController extends Controller
 
     public function create(Request $request){
         $data = $request -> validate([
-            'id_complaint' => 'required|numeric',
+            'complaint_id' => 'required|numeric',
             'crime_name' => 'required',
             'crime_description' => 'required',
         ]);
 
         $crime = Crime::create([
-            'id_complaint' => $data['id_complaint'],
+            'complaint_id' => $data['complaint_id'],
             'crime_name' => $data['crime_name'],
             'crime_description' => $data['crime_description'],
         ]);
@@ -109,7 +109,7 @@ class CrimeController extends Controller
             foreach($crime as $crime){
                 $crimeArray = [
                     "id" => $crime->id,
-                    "id_complaint" => $crime->id_complaint,
+                    "complaint_id" => $crime->complaint_id,
                     "crime_name" => $crime->crime_name,
                     "crime_description" => $crime->crime_description,
                     "created_at" => $crime->Created_at,
@@ -126,7 +126,7 @@ class CrimeController extends Controller
             foreach ($crimes as $crime) {
                 $crimeArray[] = [
                     "id" => $crime->id,
-                    "id_complaint" => $crime->id_complaint,
+                    "complaint_id" => $crime->complaint_id,
                     "crime_name" => $crime->crime_name,
                     "crime_description" => $crime->crime_description,
                 ];

@@ -9,7 +9,7 @@ class Description extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_complaint',
+        'complaint_id',
         'description',
     ];
 }

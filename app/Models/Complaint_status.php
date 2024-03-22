@@ -9,7 +9,7 @@ class Complaint_status extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_complant',
+        'complaint_id',
         'complaint_status',
     ];
 }

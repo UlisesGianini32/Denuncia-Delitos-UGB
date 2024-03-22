@@ -15,12 +15,12 @@ class ComplaintController extends Controller
         foreach($complaints as $complaint){
             $object = [
                 "id" => $complaint->id,
-                "id_complaint" => $complaint->id_complaint,
+                "complaint_id" => $complaint->complaint_id,
                 "description" => $complaint->description,
                 "complaint_status" => $complaint->complaint_status,
-                "id_victim" => $complaint->id_victim,
-                "id_witness" => $complaint->id_witness,
-                "id_suspect" => $complaint->id_suspect,
+                "victim_id" => $complaint->victim_id,
+                "witness_id" => $complaint->witness_id,
+                "suspect_id" => $complaint->suspect_id,
                 "created_at" => $complaint->created_at,
                 "updated_at" => $complaint->updated_at
             ];
@@ -35,12 +35,12 @@ class ComplaintController extends Controller
             $complaint = Complaint::where('id', '=', $id)->first();
                 $object = [
                     "id" => $complaint->id,
-                    "id_complaint" => $complaint->id_complaint,
+                    "complaint_id" => $complaint->complaint_id,
                     "description" => $complaint->description,
                     "complaint_status" => $complaint->complaint_status,
-                    "id_victim" => $complaint->id_victim,
-                    "id_witness" => $complaint->id_witness,
-                    "id_suspect" => $complaint->id_suspect,
+                    "victim_id" => $complaint->victim_id,
+                    "witness_id" => $complaint->witness_id,
+                    "suspect_id" => $complaint->suspect_id,
                     "created_at" => $complaint->created_at,
                     "updated_at" => $complaint->updated_at
                 ];
@@ -50,12 +50,12 @@ class ComplaintController extends Controller
     public function update(Request $request){
         $data = $request -> validate([
             'id' => 'required|numeric',
-            'id_complaint' => 'required|numeric',
+            'complaint_id' => 'required|numeric',
             'description' => 'required',
             'complaint_status' => 'required',
-            'id_victim' => 'required|numeric',
-            'id_witness' => 'required|numeric',
-            'id_suspect' => 'required|numeric',
+            'victim_id' => 'required|numeric',
+            'witness_id' => 'required|numeric',
+            'suspect_id' => 'required|numeric',
         ]);
    
         $complaint = Complaint::where('id', '=', $data['id'])->first();
@@ -63,12 +63,12 @@ class ComplaintController extends Controller
         if($complaint) {
             $old = clone $complaint;
 
-            $complaint -> id_complaint = $data['id_complaint'];
+            $complaint -> complaint_id = $data['complaint_id'];
             $complaint -> description = $data['description'];
             $complaint -> complaint_status = $data['complaint_status'];
-            $complaint -> id_victim = $data['id_victim'];
-            $complaint -> id_witness = $data['id_witness'];
-            $complaint -> id_suspect = $data['id_suspect'];
+            $complaint -> victim_id = $data['victim_id'];
+            $complaint -> witness_id = $data['witness_id'];
+            $complaint -> suspect_id = $data['suspect_id'];
 
 
             if($user->save()){
@@ -91,22 +91,22 @@ class ComplaintController extends Controller
 
     public function create(Request $request){
         $data = $request -> validate([
-            'id_complaint' => 'required|numeric',
+            'complaint_id' => 'required|numeric',
             'description' => 'required',
             'complaint_status' => 'required',
-            'id_victim' => 'required|numeric',
-            'id_witness' => 'required|numeric',
-            'id_suspect' => 'required|numeric',
+            'victim_id' => 'required|numeric',
+            'witness_id' => 'required|numeric',
+            'suspect_id' => 'required|numeric',
 
         ]);
 
         $complaint = Complaint::create([
-            'id_complaint' => $data['id_complaint'],
+            'complaint_id' => $data['complaint_id'],
             'description' => $data['description'],
             'complaint_status' => $data['complaint_status'],
-            'id_victim' => $data['id_victim'],
-            'id_witness' => $data['id_witness'],
-            'id_suspect' => $data['id_suspect'],
+            'victim_id' => $data['id_victim'],
+            'witness_id' => $data['witness_id'],
+            'suspect_id' => $data['suspect_id'],
         ]);
 
         if($complaint) {
@@ -128,12 +128,12 @@ class ComplaintController extends Controller
             foreach($complaint as $complaint){
                 $complaintArray = [
                     "id" => $complaint->id,
-                    "id_complaint" => $complaint->id_complaint,
+                    "complaint_id" => $complaint->complaint_id,
                     "description" => $complaint->description,
                     "complaint_status" => $complaint->complaint_status,
-                    "id_victim" => $complaint->id_victim,
-                    "id_witness" => $complaint->id_witness,
-                    "id_suspect" => $complaint->id_suspect,
+                    "victim_id" => $complaint->victim_id,
+                    "witness_id" => $complaint->witness_id,
+                    "suspect_id" => $complaint->suspect_id,
                     "created_at" => $complaint->Created_at,
                     "updated_at" => $complaint->Updated_at,
                 ];
@@ -147,24 +147,24 @@ class ComplaintController extends Controller
         $query = Complaint::query();
 
         if ($searchTerm) {
-            $query->where('id_complaint', 'like', '%' . $searchTerm . '%')
+            $query->where('complaint_id', 'like', '%' . $searchTerm . '%')
                   ->orWhere('description', 'like', '%' . $searchTerm . '%')
                   ->orWhere('complaint_status', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('id_victim', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('id_witness', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('id_suspect', 'like', '%' . $searchTerm . '%');
+                  ->orWhere('victim_id', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('witness_id', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('suspect_id', 'like', '%' . $searchTerm . '%');
         }
             $resultArray = [];
         
             foreach ($complaints as $complaint) {
                 $complaintDetails = [
                     "id" => $complaint->id,
-                    "id_complaint" => $complaint->id_complaint,
+                    "complaint_id" => $complaint->complaint_id,
                     "description" => $complaint->description,
                     "complaint_status" => $complaint->complaint_status,
-                    "id_victim" => $complaint->id_victim,
-                    "id_witness" => $complaint->id_witness,
-                    "id_suspect" => $complaint->id_suspect,
+                    "victim_id" => $complaint->victim_id,
+                    "witness_id" => $complaint->witness_id,
+                    "suspect_id" => $complaint->suspect_id,
                 ];
                 $resultArray[] = $complaintDetails; // Agrega los detalles de la compra al array resultante
             }
@@ -177,12 +177,12 @@ class ComplaintController extends Controller
             foreach ($complaints as $complaint) {
                 $complaintArray[] = [
                     "id" => $complaint->id,
-                    "id_complaint" => $complaint->id_complaint,
+                    "complaint_id" => $complaint->complaint_id,
                     "description" => $complaint->description,
                     "complaint_status" => $complaint->complaint_status,
-                    "id_victim" => $complaint->id_victim,
-                    "id_witness" => $complaint->id_witness,
-                    "id_suspect" => $complaint->id_suspect,
+                    "victim_id" => $complaint->victim_id,
+                    "witness_id" => $complaint->witness_id,
+                    "suspect_id" => $complaint->suspect_id,
                 ];
             }    
         

@@ -15,7 +15,7 @@ class Complaint_statusController extends Controller
         foreach($complaint_satatus as $complaint_satatu){
             $object = [
                 "id" => $complaint_satatu->id,
-                "id_complaint" => $complaint_satatu->id_complaint,
+                "complaint_id" => $complaint_satatu->id_complaint,
                 "complaint_status" => $complaint_satatu->complaint_status,
                 "created_at" => $complaint_satatu->created_at,
                 "updated_at" => $complaint_satatu->updated_at
@@ -31,7 +31,7 @@ class Complaint_statusController extends Controller
             $complaint_satatu = Complaint_Satatus::where('id', '=', $id)->first();
                 $object = [
                     "id" => $complaint_satatu->id,
-                    "id_complaint" => $complaint_satatu->id_complaint,
+                    "complaint_id" => $complaint_satatu->id_complaint,
                     "complaint_status" => $complaint_satatu->complaint_status,
                     "created_at" => $complaint_satatu->created_at,
                     "updated_at" => $complaint_satatu->updated_at
@@ -42,7 +42,7 @@ class Complaint_statusController extends Controller
     public function update(Request $request){
         $data = $request -> validate([
             'id' => 'required|numeric',
-            'id_complaint' => 'required|numeric',
+            'complaint_id' => 'required|numeric',
             'complaint_status' => 'required',
         ]);
    
@@ -51,7 +51,7 @@ class Complaint_statusController extends Controller
         if($complaint_satatu) {
             $old = clone $complaint_satatu;
 
-            $complaint_satatu -> id_complaint = $data['id_complaint'];
+            $complaint_satatu -> id_complaint = $data['complaint_id'];
             $complaint_satatu -> complaint_status = $data['complaint_status'];
 
 
@@ -75,12 +75,12 @@ class Complaint_statusController extends Controller
 
     public function create(Request $request){
         $data = $request -> validate([
-            'id_complaint' => 'required|numeric',
+            'complaint_id' => 'required|numeric',
             'complaint_status' => 'required',
         ]);
 
         $complaint_satatu = Complaint_Satatus::create([
-            'id_complaint' => $data['id_complaint'],
+            'complaint_id' => $data['complaint_id'],
             'complaint_status' => $data['complaint_status'],
         ]);
 
@@ -103,7 +103,7 @@ class Complaint_statusController extends Controller
             foreach($complaint_satatus as $complaint_satatu){
                 $complaintArray = [
                     "id" => $complaint_satatu->id,
-                    "id_complaint" => $complaint_satatu->id_complaint,
+                    "complaint_id" => $complaint_satatu->id_complaint,
                     "complaint_status" => $complaint_satatu->complaint_status,
                     "created_at" => $complaint_satatu->created_at,
                     "updated_at" => $complaint_satatu->updated_at,
@@ -118,7 +118,7 @@ class Complaint_statusController extends Controller
         $query = Complaint_Satatus::query();
 
         if ($searchTerm) {
-            $query->where('id_complaint', 'like', '%' . $searchTerm . '%')
+            $query->where('complaint_id', 'like', '%' . $searchTerm . '%')
                   ->orWhere('complaint_status', 'like', '%' . $searchTerm . '%');
         }
             $resultArray = [];
@@ -126,7 +126,7 @@ class Complaint_statusController extends Controller
             foreach ($complaint_satatus as $complaint_satatu) {
                 $complaint_satatuDetails = [
                     "id" => $complaint_satatu->id,
-                    "id_complaint" => $complaint_satatu->id_complaint,
+                    "complaint_id" => $complaint_satatu->complaint_id,
                     "complaint_status" => $complaint_satatu->complaint_status,
                 ];
                 $resultArray[] = $complaintDetails; // Agrega los detalles de la compra al array resultante
@@ -140,7 +140,7 @@ class Complaint_statusController extends Controller
             foreach ($complaint_satatus as $complaint_satatu) {
                 $complaint_satatuArray[] = [
                     "id" => $complaint_satatu->id,
-                    "id_complaint" => $cocomplaint_satatuplaint->id_complaint,
+                    "complaint_id" => $cocomplaint_satatuplaint->id_complaint,
                     "complaint_status" => $complaint_satatu->complaint_status,
                 ];
             }    
