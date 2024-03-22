@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class ComplaintController extends Controller
 {
-    
     public function list(Request $request){
         $complaints = Complaint::all();
         $list = [];
@@ -94,7 +93,7 @@ class ComplaintController extends Controller
         $data = $request -> validate([
             'id_complaint' => 'required|numeric',
             'description' => 'required',
-            'complaint_status' => 'complaint_status',
+            'complaint_status' => 'required',
             'id_victim' => 'required|numeric',
             'id_witness' => 'required|numeric',
             'id_suspect' => 'required|numeric',

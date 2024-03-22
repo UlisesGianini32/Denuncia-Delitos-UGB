@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\DescrptionController;
+use App\Http\Controllers\Api\Complaint_statusController;
 use App\Http\Controllers\Api\PeopleController;
 use App\Http\Controllers\Api\CrimeController;
 use App\Http\Controllers\Api\ComplaintController;
@@ -36,6 +38,16 @@ Route::get('/complaints',[ComplaintController::class, 'list']);
 Route::get('/complaints/{id}', [ComplaintController::class, 'item']);
 Route::post('/complaints/create', [ComplaintController::class, 'create']);
 Route::post('/complaints/update', [ComplaintController::class, 'update']);
+
+Route::get('/description',[DescrptionController::class, 'list']);
+Route::get('/description/{id}', [DescrptionController::class, 'item']);
+Route::post('/description/create', [DescrptionController::class, 'create']);
+Route::post('/description/update', [DescrptionController::class, 'update']);
+
+Route::get('/complaint_status',[Complaint_statusController::class, 'list']);
+Route::get('/complaint_status/{id}', [Complaint_statusController::class, 'item']);
+Route::post('/complaint_status/create', [Complaint_statusController::class, 'create']);
+Route::post('/complaint_status/update', [Complaint_statusController::class, 'update']);
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
