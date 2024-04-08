@@ -52,10 +52,12 @@ class UserController extends Controller
             'password'=> 'required',
         ]);
 
+
+        $hashedPassword = bcrypt($data['password']);
         $user=User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => $data['password'],
+            'password' => $hashedPassword,
         ]);
         if($user){
             return response()->json([
