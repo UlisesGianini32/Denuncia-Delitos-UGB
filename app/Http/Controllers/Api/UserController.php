@@ -52,7 +52,6 @@ class UserController extends Controller
             'password'=> 'required',
         ]);
 
-
         $hashedPassword = bcrypt($data['password']);
         $user=User::create([
             'name' => $data['name'],
