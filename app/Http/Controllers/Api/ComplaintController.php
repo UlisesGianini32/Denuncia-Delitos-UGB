@@ -151,4 +151,22 @@ class ComplaintController extends Controller
         return response()->json($resultArray); // Devuelve el array completo como JSON
     }    
 
+    public function delete($id)
+{
+    $complaint = Complaint::find($id);
+
+    if (!$complaint) {
+        return response()->json([
+            'message' => 'Complaint not found',
+        ], 404);
+    }
+
+    $complaint->delete();
+
+    return response()->json([
+        'message' => 'Complaint deleted successfully',
+    ]);
+}
+
+
 }
