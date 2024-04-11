@@ -8,9 +8,6 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    //
-
-
     public function login(Request $request) {
         $loginData = $request->validate([
             'email' => 'required',
@@ -32,7 +29,6 @@ class AuthController extends Controller
             'success' => true
         ]);
     }
-
 
     public function logout(Request $request) {
 

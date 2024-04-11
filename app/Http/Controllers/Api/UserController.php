@@ -15,108 +15,51 @@ class UserController extends Controller
     public function list(){
         $users = User::all();
         $list = [];
-        foreach($users as $user)
-        {
-            $object =[
+
+        foreach($users as $user){
+            $object = [
                 "id" => $user->id,
                 "name" => $user->name,
-                "email" => $user->email,
-                "created" => $user->created_at,
-                "updated" => $user->updated_at
+                "email"=> $user->email,
+                "created_at" => $user->created_at,
+                "email_verified_at" => $user->email_verified_at,
+                "updated_at" => $user->updated_at,
             ];
+            
             array_push($list, $object);
         }
+
         return response()->json($list);
     }
 
-    public function item($id)
-    {
-        $user = User::where('id', '=', $id) ->first();
-        {
-            $object =[
-                "id" => $user->id,
-                "name" => $user->name,
-                "email" => $user->email,
-                "created" => $user->created_at,
-                "updated" => $user->updated_at
-            ];
-        }
-        return response()->json($object);
+    public function item($id){
+        $user = User::where('id', '=', $id)->first();
+                $object = [
+                    "id" => $user->id,
+                    "name" => $user->name,
+                    "email"=> $user->email,
+                    "created_at" => $user->created_at,
+                    "email_verified_at" => $user->email_verified_at,
+                    "updated_at" => $user->updated_at,
+                ];
+            return response()->json($object);
     }
 
-    public function create(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required',
-            'email'=> 'required',
-            'password'=> 'required',
-        ]);
-
-        $hashedPassword = bcrypt($data['password']);
-        $user=User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => $hashedPassword,
-        ]);
-        if($user){
-            return response()->json([
-                'message' => 'A user has been created',
-                'data' => $user
-            ]);
-        }else{
-            return response()->json([
-                'message' => 'Error creating user',
-            ]);
-        }
-    } 
     public function update(Request $request)
     {
         $data = $request->validate([
             'id' => 'required|integer',
             'name' => 'required',
-            'email'=> 'required|email',
-        ]);
-        
-        $user = User::find($data['id']);
-        
-        if(!$user) {
-            return response()->json(["response" =>'Error: User not found']);
-        }
-    
-        $user->name = $data['name'];
-        $user->email = $data['email'];
-    
-        // Verificar si se proporciona una nueva contraseña
-        if($request->has('password')) {
-            // Hash de la nueva contraseña
-            $user->password = Hash::make($request->input('password'));
-        }
-    
-        if($user->save()){
-            $object = [
-                "response" => 'success, Item updated correctly',
-                "user" => $user,
-            ];
-            return response()->json($object);
-        } else {
-            return response()->json(["response" =>'Error: Unable to update user']);
-        }
-    }
-    
-
-    public function updatepass(Request $request)
-    {
-        $data = $request->validate([
-            'id' => 'required|integer',
-            'password'=> 'required',
+            'email'=> 'required',
         ]);
         $user = User::where('id', '=', $data['id'])->first();
-        
+
         if($user)
         {
             $old = clone $user;
 
-            $user->password =$data['password'];
+            $user->name =$data['name'];
+            $user->email =$data['email'];
 
             if($user->save()){
                 $object =
@@ -141,5 +84,32 @@ class UserController extends Controller
             ];
             return response()->json($object);
         }
-    } 
+    }
+
+    public function create(Request $request){
+        $data = $request -> validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+
+        ]);
+
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+
+        if($user) {
+            return response() ->json([
+                'message' => 'Usuario creada correctamente',
+                'data' => $user
+            ]);
+
+        }else{
+            return response() ->json([
+                'message' => 'Error al crear un usuario',
+            ]);
+        }
+    }
 }
