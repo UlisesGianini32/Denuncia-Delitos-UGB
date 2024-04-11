@@ -38,7 +38,7 @@ Route::get('/complaints',[ComplaintController::class, 'list']);
 Route::get('/complaints/{id}', [ComplaintController::class, 'item']);
 Route::post('/complaints/create', [ComplaintController::class, 'create']);
 Route::post('/complaints/update', [ComplaintController::class, 'update']);
-route::post('/complaints/delete/{id}', [Complaint_statusController::class, 'delete']);
+route::post('/complaints/delete/{id}', [ComplaintController::class, 'delete']);
 
 
 Route::get('/description',[DescrptionController::class, 'list']);
