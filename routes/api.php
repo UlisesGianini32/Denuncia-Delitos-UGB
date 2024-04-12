@@ -36,6 +36,7 @@ Route::post('/crime/update', [CrimeController::class, 'update']);
 
 Route::get('/complaints',[ComplaintController::class, 'list']);
 Route::get('/complaints/{id}', [ComplaintController::class, 'item']);
+Route::get('/complaints/user/{userId}', [ComplaintController::class, 'complaintsUser']);
 Route::post('/complaints/create', [ComplaintController::class, 'create']);
 Route::post('/complaints/update', [ComplaintController::class, 'update']);
 route::post('/complaints/delete/{id}', [ComplaintController::class, 'delete']);
