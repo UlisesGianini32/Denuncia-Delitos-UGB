@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('complaints', function (Blueprint $table) {
-            $table->id(); // Utiliza este método para hacer el campo 'id' autoincremental
-            $table->integer('complaint_id')->autoIncrement(); // Añade el método autoIncrement para hacer el campo autoincremental
+            $table->id('id');
+            $table->integer('complaint_id');
             $table->string('description');
             $table->string('complaint_status');
-            $table->integer('victim_id')->autoIncrement(); // Añade el método autoIncrement para hacer el campo autoincremental
-            $table->integer('witness_id')->autoIncrement(); // Añade el método autoIncrement para hacer el campo autoincremental
-            $table->integer('suspect_id')->autoIncrement(); // Añade el método autoIncrement para hacer el campo autoincremental
+            $table->integer('victim_id');
+            $table->integer('witness_id');
+            $table->integer('suspect_id');
             $table->timestamps();
         });
     }
