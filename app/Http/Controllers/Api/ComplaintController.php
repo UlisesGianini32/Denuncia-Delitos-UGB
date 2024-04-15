@@ -175,4 +175,27 @@ class ComplaintController extends Controller
         
     }
 
+    public function getVictim($complaintId)
+    {
+        $complaint = Complaint::findOrFail($complaintId);
+        $victim = $complaint->victim;
+
+        return response()->json($victim);
+    }
+
+    public function getWitness($complaintId)
+    {
+        $complaint = Complaint::findOrFail($complaintId);
+        $witness = $complaint->witness;
+
+        return response()->json($witness);
+    }
+
+    public function getSuspect($complaintId)
+    {
+        $complaint = Complaint::findOrFail($complaintId);
+        $suspect = $complaint->suspect;
+
+        return response()->json($suspect);
+    }
 }
