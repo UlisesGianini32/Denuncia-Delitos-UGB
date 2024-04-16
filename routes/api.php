@@ -54,11 +54,11 @@ Route::post('/witnes/update', [WitneController::class, 'update']);
 Route::get('/complaint_status',[Complaint_statusController::class, 'list']);
 Route::get('/complaint_status/{id}', [Complaint_statusController::class, 'item']);
 Route::post('/complaint_status/create', [Complaint_statusController::class, 'create']);
-Route::post('/complaint_status/update', [Complaint_statusController::class, 'update']);
+Route::post('/complaint_status/update', [ComplaintController::class, 'update']);
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-Route::get('/Elements/{id}', [CategorieController::class, 'elements']);
+Route::get('/Elements/{id}', [ComplaintController::class, 'elements']);
 Route::get('/ListComplaintComplaint/{id}', [ComplaintController::class, 'ListUser']);
 Route::get('/SearchComplaints/{searchTerm}', [ComplaintController::class, 'SearchComplaints']);
 

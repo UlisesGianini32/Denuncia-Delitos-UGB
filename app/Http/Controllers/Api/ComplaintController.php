@@ -19,9 +19,9 @@ class ComplaintController extends Controller
                 "complaint_id" => $complaint->complaint_id,
                 "description" => $complaint->description,
                 "complaint_status" => $complaint->complaint_status,
-                "victim_id" => $complaint->victim_id,
-                "witness_id" => $complaint->witness_id,
-                "suspect_id" => $complaint->suspect_id,
+                "victim" => $complaint->victim,
+                "witness" => $complaint->witness,
+                "suspect" => $complaint->suspect,
                 "created_at" => $complaint->created_at,
                 "updated_at" => $complaint->updated_at
             ];
@@ -61,7 +61,6 @@ class ComplaintController extends Controller
     {
         $data = $request->validate([
             'id' => 'required|numeric',
-            'complaint_id' => 'required|numeric',
             'description' => 'required',
             'complaint_status' => 'required',
             'victim_id' => 'required|numeric',
@@ -77,18 +76,23 @@ class ComplaintController extends Controller
             ], 404);
         }
 
-        $complaint->update($data);
-
-        return response()->json([
-            'message' => 'Successfully updated complaint',
-            'data' => $complaint
-        ]);
+        if($complaint->update($data)){
+            
+            return response()->json([
+                'message' => 'Successfully updated complaint',
+                'data' => $complaint
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Error unable to save complaint',
+                'data' => 'try again later'
+            ]);
+        }
     }
 
     public function create(Request $request)
     {
         $data = $request->validate([
-            'complaint_id' => 'required|numeric',
             'description' => 'required',
             'complaint_status' => 'required',
             'victim_id' => 'required|numeric',
@@ -169,10 +173,6 @@ class ComplaintController extends Controller
                 'message' => 'Error: Something went wrong while deleting the post.'
             ], 500);
         }
-    }
-
-    public function complaintsUser($id){
-        
     }
 
     public function getVictim($complaintId)
