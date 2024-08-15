@@ -9,6 +9,11 @@ use App\Http\Controllers\Api\WitneController;
 use App\Http\Controllers\Api\ComplaintController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\LotController;
+use App\Http\Controllers\Api\ProductController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,8 +49,6 @@ Route::get('/complaints/{id}/victim', [ComplaintController::class, 'item']);
 Route::get('/complaints/{id}/witnes', [ComplaintController::class, 'item']);
 Route::get('/complaints/{id}/suspect', [ComplaintController::class, 'item']);
 
-
-
 Route::get('/witnes',[WitneController::class, 'list']);
 Route::get('/witnes/{id}', [WitneController::class, 'item']);
 Route::post('/witnes/create', [WitneController::class, 'create']);
@@ -54,7 +57,7 @@ Route::post('/witnes/update', [WitneController::class, 'update']);
 Route::get('/complaint_status',[Complaint_statusController::class, 'list']);
 Route::get('/complaint_status/{id}', [Complaint_statusController::class, 'item']);
 Route::post('/complaint_status/create', [Complaint_statusController::class, 'create']);
-Route::post('/complaint_status/update', [ComplaintController::class, 'update']);
+Route::post('/complaint_status/update', [Complaint_statusController::class, 'update']);
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
@@ -66,3 +69,26 @@ Route::get('/users',[UserController::class, 'list']);
 Route::get('/users/{id}', [UserController::class, 'item']);
 Route::post('/users/create',[UserController::class, 'create']);
 Route::post('/users/update',[UserController::class, 'update']);
+
+//---------------------------------------------------------------------------------------------------------
+Route::get('/lot', [LotController::class, 'list']);
+Route::get('/lot/{id}', [LotController::class, 'item']);
+Route::post('/lot/create', [LotController::class, 'create']);
+Route::post('/lot/update{id}', [LotController::class, 'update']);
+Route::post('/lot/delete/{id}', [LotController::class, 'delete']);
+
+Route::get('/product', [ProductController::class, 'list']);
+Route::get('/product/{id}', [ProductController::class, 'item']);
+Route::post('/product/create', [ProductController::class, 'create']);
+Route::post('/product/update{id}', [ProductController::class, 'update']);
+Route::post('/product/delete/{id}', [ProductController::class, 'delete']);
+
+Route::get('/employee', [EmployeeController::class, 'list']);
+Route::get('/employee/{id}', [EmployeeController::class, 'item']);
+Route::post('/employee/create', [EmployeeController::class, 'create']);
+Route::post('/employee/update{id}', [EmployeeController::class, 'update']);
+Route::post('/employee/delete/{id}', [EmployeeController::class, 'delete']);
+
+Route::get('/lot/search/{searchTerm}', [LotController::class, 'SearchLots']);
+Route::get('/product/search/{searchTerm}', [ProductController::class, 'SearchProducts']);
+Route::get('/employee/search/{searchTerm}', [EmployeeController::class, 'SearchEmployees']);
