@@ -44,7 +44,7 @@ Route::post('/employee/create', [EmployeeController::class, 'create']);
 Route::post('/employee/update{id}', [EmployeeController::class, 'update']);
 Route::post('/employee/delete/{id}', [EmployeeController::class, 'delete']);
 
-Route::post('/users', [UserController::class, 'list']);
+Route::get('/users', [UserController::class, 'list']);
 Route::post('/users/create', [UserController::class, 'create']);
 Route::get('/lot/search/{searchTerm}', [LotController::class, 'SearchLots']);
 Route::get('/product/search/{searchTerm}', [ProductController::class, 'SearchProducts']);
