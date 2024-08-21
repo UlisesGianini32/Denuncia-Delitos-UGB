@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('entries', function (Blueprint $table) {
             $table->id('entry_id');
-            $table->string('rep');
+            $table->string('rpe');
             $table->string('producto');
             $table->integer('cantidad');
             $table->string('foto');

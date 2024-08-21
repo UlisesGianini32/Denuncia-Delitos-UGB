@@ -10,8 +10,10 @@ class Entry extends Model
     protected $table = 'entries';
     use HasFactory;
     protected $fillable = [
-        'employee_id',
-        'nombre',
         'rpe',
+        'producto',
+        'cantidad',
+        'foto',
+        'firma'
     ];
 }
