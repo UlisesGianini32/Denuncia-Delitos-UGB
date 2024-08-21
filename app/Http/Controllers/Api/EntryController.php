@@ -84,22 +84,32 @@ class EntryController extends Controller
     }
 
     public function create(Request $request)
-    {
-        $data = $request->validate([
-            'rep' => 'required',
-            'producto' => 'required',
-            'cantidad' => 'required|numeric',
-            'foto' => 'nullable',
-            'firma' => 'nullable',
-        ]);
+{
+    $data = $request->validate([
+        'rep' => 'required|alpha_num',
+        'producto' => 'required',
+        'cantidad' => 'required|numeric',
+        'foto' => 'required',
+        'firma' => 'required',
+    ]);
 
+    try {
+        // Intentar crear la entrada
         $entry = Entry::create($data);
 
         return response()->json([
             'message' => 'Successfully created entry',
             'data' => $entry
         ], 201);
+    } catch (\Exception $e) {
+        // En caso de fallo, devolver una respuesta de error
+        return response()->json([
+            'message' => 'Failed to create entry',
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
+
 
     public function elements($entry_id)
     {

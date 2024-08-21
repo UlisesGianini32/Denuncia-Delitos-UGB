@@ -112,30 +112,40 @@ class LotController extends Controller
     }
 
     public function create(Request $request)
-    {
-        $data = $request->validate([
-            'codigo' => 'required|alpha_num',
-            'rpe' => 'required',
-            'productos' => 'required',
-            'cantidad' => 'required|numeric',
-            'productos_2' => 'required',
-            'cantidad_2' => 'required|numeric',
-            'productos_3' => 'required',
-            'cantidad_3' => 'required|numeric',
-            'productos_4' => 'required',
-            'cantidad_4' => 'required|numeric',
-            'imagen' => 'required',
-            'firma' => 'required',
-            'rpe2' => 'required|numeric',
-        ]);
+{
+    $data = $request->validate([
+        'codigo' => 'required|alpha_num',
+        'rpe' => 'required',
+        'productos' => 'required',
+        'cantidad' => 'required|numeric',
+        'productos_2' => 'required',
+        'cantidad_2' => 'required|numeric',
+        'productos_3' => 'required',
+        'cantidad_3' => 'required|numeric',
+        'productos_4' => 'required',
+        'cantidad_4' => 'required|numeric',
+        'imagen' => 'required',
+        'firma' => 'required',
+        'rpe2' => 'required|numeric',
+    ]);
 
+    try {
+        // Intentar crear el lote
         $lot = Lot::create($data);
 
         return response()->json([
             'message' => 'Successfully created lot',
             'data' => $lot
         ], 201);
+    } catch (\Exception $e) {
+        // En caso de fallo, devolver una respuesta de error
+        return response()->json([
+            'message' => 'Failed to create lot',
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
+
 
     public function Elements($lot_id)
     {
