@@ -110,6 +110,7 @@ class LotController extends Controller
 
     public function create(Request $request)
 {
+    // Validación de los datos
     $data = $request->validate([
         'rpe' => 'required|alpha_num',
         'producto' => 'required',
@@ -129,18 +130,27 @@ class LotController extends Controller
         // Intentar crear el lote
         $lot = Lot::create($data);
 
-        return response()->json([
-            'message' => 'Successfully created lot',
-            'data' => $lot
-        ], 201);
+        // Verificar si realmente se creó el lote
+        if ($lot) {
+            return response()->json([
+                'message' => 'Successfully created lot',
+                'data' => $lot
+            ], 201);
+        } else {
+            // Si no se creó el lote
+            return response()->json([
+                'message' => 'Failed to create lot',
+            ], 500);
+        }
     } catch (\Exception $e) {
-        // En caso de fallo, devolver una respuesta de error
+        // Capturar cualquier excepción y devolver el error
         return response()->json([
-            'message' => 'Failed to create lot',
+            'message' => 'Error: Unable to create lot',
             'error' => $e->getMessage()
         ], 500);
     }
 }
+
 
 
     public function Elements($lot_id)
