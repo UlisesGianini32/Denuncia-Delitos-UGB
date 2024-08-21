@@ -16,7 +16,7 @@ class EntryController extends Controller
         foreach ($entries as $entry) {
             $object = [
                 "entry_id" => $entry->entry_id,
-                "rep" => $entry->rep,
+                "rpe" => $entry->rep,
                 "producto" => $entry->producto,
                 "cantidad" => $entry->cantidad,
                 "foto" => $entry->foto,
@@ -41,7 +41,7 @@ class EntryController extends Controller
 
         $object = [
             "entry_id" => $entry->entry_id,
-            "rep" => $entry->rep,
+            "rpe" => $entry->rep,
             "producto" => $entry->producto,
             "cantidad" => $entry->cantidad,
             "foto" => $entry->foto,
@@ -55,7 +55,7 @@ class EntryController extends Controller
     {
         $data = $request->validate([
             'entry_id' => 'required|numeric',
-            'rep' => 'required',
+            'rpe' => 'required',
             'producto' => 'required',
             'cantidad' => 'required|numeric',
             'foto' => 'nullable',
@@ -86,7 +86,7 @@ class EntryController extends Controller
     public function create(Request $request)
 {
     $data = $request->validate([
-        'rep' => 'required|alpha_num',
+        'rpe' => 'required|alpha_num',
         'producto' => 'required',
         'cantidad' => 'required|numeric',
         'foto' => 'required',
@@ -120,7 +120,7 @@ class EntryController extends Controller
         foreach ($entries as $entry) {
             $entryArray[] = [
                 "entry_id" => $entry->entry_id,
-                "rep" => $entry->rep,
+                "rpe" => $entry->rep,
                 "producto" => $entry->producto,
                 "cantidad" => $entry->cantidad,
                 "foto" => $entry->foto,
@@ -141,7 +141,7 @@ class EntryController extends Controller
         foreach ($entries as $entry) {
             $entryDetails = [
                 "entry_id" => $entry->entry_id,
-                "rep" => $entry->rep,
+                "rpe" => $entry->rep,
                 "producto" => $entry->producto,
                 "cantidad" => $entry->cantidad,
             ];
