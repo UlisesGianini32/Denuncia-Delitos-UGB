@@ -18,13 +18,13 @@ class LotController extends Controller
                 "lot_id" => $lot->lot_id,
                 "codigo" => $lot->codigo,
                 "rpe" => $lot->rpe,
-                "productos" => $lot->productos,
+                "producto" => $lot->producto,
                 "cantidad" => $lot->cantidad,
-                "productos_2" => $lot->productos_2,
+                "producto_2" => $lot->producto_2,
                 "cantidad_2" => $lot->cantidad_2,
-                "productos_3" => $lot->productos_3,
+                "producto_3" => $lot->producto_3,
                 "cantidad_3" => $lot->cantidad_3,
-                "productos_4" => $lot->productos_4,
+                "producto_4" => $lot->producto_4,
                 "cantidad_4" => $lot->cantidad_4,
                 "imagen" => $lot->imagen,
                 "firma" => $lot->firma,
@@ -53,13 +53,13 @@ class LotController extends Controller
             "lot_id" => $lot->lot_id,
             "codigo" => $lot->codigo,
             "rpe" => $lot->rpe,
-            "productos" => $lot->productos,
+            "producto" => $lot->producto,
             "cantidad" => $lot->cantidad,
-            "productos_2" => $lot->productos_2,
+            "producto_2" => $lot->producto_2,
             "cantidad_2" => $lot->cantidad_2,
-            "productos_3" => $lot->productos_3,
+            "producto_3" => $lot->producto_3,
             "cantidad_3" => $lot->cantidad_3,
-            "productos_4" => $lot->productos_4,
+            "producto_4" => $lot->producto_4,
             "cantidad_4" => $lot->cantidad_4,
             "imagen" => $lot->imagen,
             "firma" => $lot->firma,
@@ -77,13 +77,13 @@ class LotController extends Controller
             'lot_id' => 'required|numeric',
             'codigo' => 'required|alpha_num',
             'rpe' => 'required',
-            'productos' => 'required',
+            'producto' => 'required',
             'cantidad' => 'required|numeric',
-            'productos_2' => 'required',
+            'producto_2' => 'required',
             'cantidad_2' => 'required|numeric',
-            'productos_3' => 'required',
+            'producto_3' => 'required',
             'cantidad_3' => 'required|numeric',
-            'productos_4' => 'required',
+            'producto_4' => 'required',
             'cantidad_4' => 'required|numeric',
             'imagen' => 'required',
             'firma' => 'required',
@@ -116,13 +116,13 @@ class LotController extends Controller
     $data = $request->validate([
         'codigo' => 'required|alpha_num',
         'rpe' => 'required',
-        'productos' => 'required',
+        'producto' => 'required',
         'cantidad' => 'required|numeric',
-        'productos_2' => 'required',
+        'producto_2' => 'required',
         'cantidad_2' => 'required|numeric',
-        'productos_3' => 'required',
+        'producto_3' => 'required',
         'cantidad_3' => 'required|numeric',
-        'productos_4' => 'required',
+        'producto_4' => 'required',
         'cantidad_4' => 'required|numeric',
         'imagen' => 'required',
         'firma' => 'required',
@@ -158,19 +158,19 @@ class LotController extends Controller
                 "lot_id" => $lot->lot_id,
                 "codigo" => $lot->codigo,
                 "rpe" => $lot->rpe,
-                "productos" => $lot->productos,
+                "producto" => $lot->producto,
                 "cantidad" => $lot->cantidad,
-                "productos_2" => $lot->productos_2,
+                "producto_2" => $lot->producto_2,
                 "cantidad_2" => $lot->cantidad_2,
-                "productos_3" => $lot->productos_3,
+                "producto_3" => $lot->producto_3,
                 "cantidad_3" => $lot->cantidad_3,
-                "productos_4" => $lot->productos_4,
+                "producto_4" => $lot->producto_4,
                 "cantidad_4" => $lot->cantidad_4,
                 "imagen" => $lot->imagen,
                 "firma" => $lot->firma,
                 "rpe2" => $lot->rpe2,
                 "created_at" => $lot->created_at,
-                "updated_at" => $lot->updated_at,
+                "updated_at" => $lot->updated_at
             ];
         }
 
@@ -189,17 +189,19 @@ class LotController extends Controller
                 "lot_id" => $lot->lot_id,
                 "codigo" => $lot->codigo,
                 "rpe" => $lot->rpe,
-                "productos" => $lot->productos,
+                "producto" => $lot->producto,
                 "cantidad" => $lot->cantidad,
-                "productos_2" => $lot->productos_2,
+                "producto_2" => $lot->producto_2,
                 "cantidad_2" => $lot->cantidad_2,
-                "productos_3" => $lot->productos_3,
+                "producto_3" => $lot->producto_3,
                 "cantidad_3" => $lot->cantidad_3,
-                "productos_4" => $lot->productos_4,
+                "producto_4" => $lot->producto_4,
                 "cantidad_4" => $lot->cantidad_4,
                 "imagen" => $lot->imagen,
                 "firma" => $lot->firma,
                 "rpe2" => $lot->rpe2,
+                "created_at" => $lot->created_at,
+                "updated_at" => $lot->updated_at
             ];
             $resultArray[] = $lotDetails; // Agrega los detalles del lote al array resultante
         }
@@ -230,32 +232,32 @@ class LotController extends Controller
     public function getProductos($lot_id)
     {
         $lot = Lot::findOrFail($lot_id);
-        $productos = $lot->productos;
+        $producto = $lot->producto;
 
-        return response()->json($productos);
+        return response()->json($producto);
     }
 
     public function getProductos2($lot_id)
     {
         $lot = Lot::findOrFail($lot_id);
-        $productos2 = $lot->productos2;
+        $producto2 = $lot->producto2;
 
-        return response()->json($productos2);
+        return response()->json($producto2);
     }
 
     public function getProductos3($lot_id)
     {
         $lot = Lot::findOrFail($lot_id);
-        $productos3 = $lot->productos3;
+        $producto3 = $lot->producto3;
 
-        return response()->json($productos3);
+        return response()->json($producto3);
     }
 
     public function getProductos4($lot_id)
     {
         $lot = Lot::findOrFail($lot_id);
-        $productos4 = $lot->productos4;
+        $producto4 = $lot->producto4;
 
-        return response()->json($productos4);
+        return response()->json($producto4);
     }
 }

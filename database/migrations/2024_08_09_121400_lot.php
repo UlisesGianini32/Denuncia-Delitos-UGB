@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id('lot_id');
             $table->string('codigo');
             $table->string('rpe');
-            $table->string('productos');
+            $table->string('producto');
             $table->integer('cantidad');
-            $table->string('productos_2');
+            $table->string('producto_2');
             $table->integer('cantidad_2');
-            $table->string('productos_3');
+            $table->string('producto_3');
             $table->integer('cantidad_3');
-            $table->string('productos_4');
+            $table->string('producto_4');
             $table->integer('cantidad_4');
             $table->string('imagen');
             $table->string('firma');
