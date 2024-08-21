@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Entry extends Model
 {
-    protected $table = 'entry';
+    protected $table = 'entries';
     use HasFactory;
     protected $fillable = [
         'employee_id',
