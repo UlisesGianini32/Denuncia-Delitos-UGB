@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('lots', function (Blueprint $table) {
             $table->id('lot_id');
-            $table->string('codigo');
             $table->string('rpe');
             $table->string('producto');
             $table->integer('cantidad');

@@ -16,7 +16,6 @@ class LotController extends Controller
         foreach ($lots as $lot) {
             $object = [
                 "lot_id" => $lot->lot_id,
-                "codigo" => $lot->codigo,
                 "rpe" => $lot->rpe,
                 "producto" => $lot->producto,
                 "cantidad" => $lot->cantidad,
@@ -51,7 +50,6 @@ class LotController extends Controller
 
         $object = [
             "lot_id" => $lot->lot_id,
-            "codigo" => $lot->codigo,
             "rpe" => $lot->rpe,
             "producto" => $lot->producto,
             "cantidad" => $lot->cantidad,
@@ -75,8 +73,7 @@ class LotController extends Controller
     {
         $data = $request->validate([
             'lot_id' => 'required|numeric',
-            'codigo' => 'required|alpha_num',
-            'rpe' => 'required',
+            'rpe' => 'required|alpha_num',
             'producto' => 'required',
             'cantidad' => 'required|numeric',
             'producto_2' => 'required',
@@ -87,7 +84,7 @@ class LotController extends Controller
             'cantidad_4' => 'required|numeric',
             'imagen' => 'required',
             'firma' => 'required',
-            'rpe2' => 'required|numeric',
+            'rpe2' => 'required|alpha_num',
         ]);
 
         $lot = Lot::find($data['lot_id']);
@@ -114,8 +111,7 @@ class LotController extends Controller
     public function create(Request $request)
 {
     $data = $request->validate([
-        'codigo' => 'required|alpha_num',
-        'rpe' => 'required',
+        'rpe' => 'required|alpha_num',
         'producto' => 'required',
         'cantidad' => 'required|numeric',
         'producto_2' => 'required',
@@ -126,7 +122,7 @@ class LotController extends Controller
         'cantidad_4' => 'required|numeric',
         'imagen' => 'required',
         'firma' => 'required',
-        'rpe2' => 'required|numeric',
+        'rpe2' => 'required|alpha_num',
     ]);
 
     try {
@@ -156,7 +152,6 @@ class LotController extends Controller
         foreach ($lots as $lot) {
             $lotArray[] = [
                 "lot_id" => $lot->lot_id,
-                "codigo" => $lot->codigo,
                 "rpe" => $lot->rpe,
                 "producto" => $lot->producto,
                 "cantidad" => $lot->cantidad,
@@ -187,7 +182,6 @@ class LotController extends Controller
         foreach ($lots as $lot) {
             $lotDetails = [
                 "lot_id" => $lot->lot_id,
-                "codigo" => $lot->codigo,
                 "rpe" => $lot->rpe,
                 "producto" => $lot->producto,
                 "cantidad" => $lot->cantidad,
