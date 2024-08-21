@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\LotController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\EntryController;
+
 
 
 
@@ -44,9 +46,16 @@ Route::post('/employee/create', [EmployeeController::class, 'create']);
 Route::post('/employee/update{id}', [EmployeeController::class, 'update']);
 Route::post('/employee/delete/{id}', [EmployeeController::class, 'delete']);
 
+Route::get('/entry', [EntryController::class, 'list']);
+Route::get('/entry/{id}', [EntryController::class, 'item']);
+Route::post('/entry/create', [EntryController::class, 'create']);
+Route::post('/entry/update{id}', [EntryController::class, 'update']);
+Route::post('/entry/delete/{id}', [EntryController::class, 'delete']);
+
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/users', [UserController::class, 'list']);
 Route::post('/users/create', [UserController::class, 'create']);
+Route::get('/entry/search/{searchTerm}', [EntryController::class, 'SearchEntries']);
 Route::get('/lot/search/{searchTerm}', [LotController::class, 'SearchLots']);
 Route::get('/product/search/{searchTerm}', [ProductController::class, 'SearchProducts']);
 Route::get('/employee/search/{searchTerm}', [EmployeeController::class, 'SearchEmployees']);
