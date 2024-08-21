@@ -16,7 +16,7 @@ class EntryController extends Controller
         foreach ($entries as $entry) {
             $object = [
                 "entry_id" => $entry->entry_id,
-                "rpe" => $entry->rep,
+                "rpe" => $entry->rpe,
                 "producto" => $entry->producto,
                 "cantidad" => $entry->cantidad,
                 "foto" => $entry->foto,
@@ -41,7 +41,7 @@ class EntryController extends Controller
 
         $object = [
             "entry_id" => $entry->entry_id,
-            "rpe" => $entry->rep,
+            "rpe" => $entry->rpe,
             "producto" => $entry->producto,
             "cantidad" => $entry->cantidad,
             "foto" => $entry->foto,
@@ -120,7 +120,7 @@ class EntryController extends Controller
         foreach ($entries as $entry) {
             $entryArray[] = [
                 "entry_id" => $entry->entry_id,
-                "rpe" => $entry->rep,
+                "rpe" => $entry->rpe,
                 "producto" => $entry->producto,
                 "cantidad" => $entry->cantidad,
                 "foto" => $entry->foto,
@@ -141,7 +141,7 @@ class EntryController extends Controller
         foreach ($entries as $entry) {
             $entryDetails = [
                 "entry_id" => $entry->entry_id,
-                "rpe" => $entry->rep,
+                "rpe" => $entry->rpe,
                 "producto" => $entry->producto,
                 "cantidad" => $entry->cantidad,
             ];
@@ -171,12 +171,12 @@ class EntryController extends Controller
         }
     }
 
-    public function getRep($entry_id)
+    public function getRpe($entry_id)
     {
         $entry = Entry::findOrFail($entry_id);
-        $rep = $entry->rep;
+        $rpe = $entry->rpe;
 
-        return response()->json($rep);
+        return response()->json($rpe);
     }
 
     public function getProducto($entry_id)
