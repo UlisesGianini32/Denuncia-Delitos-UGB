@@ -59,37 +59,23 @@ class ProductController extends Controller
         return response()->json($object);
     }
 
-    public function update(Request $request)
-    {
-        $data = $request->validate([
-            'product_id' => 'required|numeric',
-            'codigo' => 'required|alpha_num',
-            'nombre' => 'required|string',
-            'expiracion' => 'required|string',
-            'stock_inicial' => 'required|numeric',
-            'entrada' => 'required|numeric',
-            'salida' => 'required|numeric',
-            'existencia' => 'required|numeric',
-        ]);
-
-        $product = Product::find($data['product_id']); // Cambiado de Lot a Product
+    public function update(Request $request, $product_id) {
+        $product = Product::find($product_id);
 
         if (!$product) {
-            return response()->json([
-                'message' => 'Item not found',
-            ], 404);
+            return response()->json(['message' => 'Producto no encontrado'], 404);
         }
 
-        if ($product->update($data)) {
-            return response()->json([
-                'message' => 'Successfully updated product',
-                'data' => $product
-            ]);
+        $entrada = $request->input('entrada');
+        
+        // Actualizar entrada y existencia
+        $product->entrada += $entrada;
+        $product->existencia += $entrada;
+
+        if ($product->save()) {
+            return response()->json(['message' => 'Producto actualizado correctamente']);
         } else {
-            return response()->json([
-                'message' => 'Error unable to save product',
-                'data' => 'try again later'
-            ]);
+            return response()->json(['message' => 'Error al actualizar el producto'], 500);
         }
     }
 
@@ -209,6 +195,5 @@ class ProductController extends Controller
                 'error' => $e->getMessage() // Devolver el mensaje de la excepción
             ], 500);
         }
-    }
-    
+    }    
 }
