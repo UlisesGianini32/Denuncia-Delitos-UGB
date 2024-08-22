@@ -181,22 +181,34 @@ class ProductController extends Controller
     }
 
     public function delete($product_id) {
-        $product = Product::find($product_id); // Cambiado de Lot a Product
-
-        if (!$product) {
+        try {
+            // Buscar el producto por su ID
+            $product = Product::find($product_id);
+    
+            // Si el producto no se encuentra, devolver un error 404
+            if (!$product) {
+                return response()->json([
+                    'message' => 'Error: Product not found.'
+                ], 404);
+            }
+    
+            // Intentar eliminar el producto
+            if ($product->delete()) {
+                return response()->json([
+                    'message' => 'Product deleted successfully'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Error: Unable to delete product.'
+                ], 500);
+            }
+        } catch (\Exception $e) {
+            // Capturar cualquier excepción y devolver el mensaje de error
             return response()->json([
-                'message' => 'Error: Element not found.'
-            ], 404);
-        }
-
-        if ($product->delete()) {
-            return response()->json([
-                'message' => 'Product deleted successfully'
-            ]);
-        } else {
-            return response()->json([
-                'message' => 'Error: Something went wrong while deleting the product.'
+                'message' => 'Error: Something went wrong while deleting the product.',
+                'error' => $e->getMessage() // Devolver el mensaje de la excepción
             ], 500);
         }
     }
+    
 }
