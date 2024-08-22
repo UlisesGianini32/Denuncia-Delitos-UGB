@@ -13,8 +13,8 @@ class Product extends Model
     //protected $table = 'product';
 
     // Especifica los campos que pueden ser llenados masivamente
+    protected $primaryKey = 'product_id';
     protected $fillable = [
-        'product_id',
         'codigo',
         'nombre',
         'expiracion',
