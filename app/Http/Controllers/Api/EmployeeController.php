@@ -132,24 +132,33 @@ class EmployeeController extends Controller
     }
 
     public function delete($employee_id) {
-        $employee = Employee::find($employee_id);
-
-        if (!$employee) {
+        try {
+            $employee = Employee::find($employee_id);
+    
+            if (!$employee) {
+                return response()->json([
+                    'message' => 'Error: Employee not found.'
+                ], 404);
+            }
+    
+            if ($employee->delete()) {
+                return response()->json([
+                    'message' => 'Employee deleted successfully'
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Error: Unable to delete employee.'
+                ], 500);
+            }
+        } catch (\Exception $e) {
+            // Captura cualquier excepción que ocurra y devuelve el mensaje de error
             return response()->json([
-                'message' => 'Error: Element not found.'
-            ], 404);
-        }
-
-        if ($employee->delete()) {
-            return response()->json([
-                'message' => 'Post deleted successfully'
-            ]);
-        } else {
-            return response()->json([
-                'message' => 'Error: Something went wrong while deleting the post.'
+                'message' => 'Error: Something went wrong while deleting the employee.',
+                'error' => $e->getMessage() // Muestra el mensaje de la excepción
             ], 500);
         }
     }
+    
 
     public function getNombre($employee_id)
     {
