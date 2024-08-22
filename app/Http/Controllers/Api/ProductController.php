@@ -35,7 +35,7 @@ class ProductController extends Controller
 
     public function item($product_id)
     {
-        $product = Product::where('id', $id)->first(); // Cambiado de Lot a Product
+        $product = Product::where('product_id', $product_id)->first(); // Cambiado de Lot a Product
 
         if (!$product) {
             return response()->json([
@@ -65,7 +65,7 @@ class ProductController extends Controller
             'product_id' => 'required|numeric',
             'codigo' => 'required|alpha_num',
             'nombre' => 'required|string',
-            'expiracion' => 'required|date',
+            'expiracion' => 'required|string',
             'stock_inicial' => 'required|numeric',
             'entrada' => 'required|numeric',
             'salida' => 'required|numeric',
@@ -95,23 +95,42 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
+        // Validación de los datos
         $data = $request->validate([
             'codigo' => 'required|alpha_num',
             'nombre' => 'required|string',
-            'expiracion' => 'required|date',
+            'expiracion' => 'required|string',
             'stock_inicial' => 'required|numeric',
             'entrada' => 'required|numeric',
             'salida' => 'required|numeric',
             'existencia' => 'required|numeric',
         ]);
-
-        $product = Product::create($data); // Cambiado de Lot a Product
-
-        return response()->json([
-            'message' => 'Successfully created product',
-            'data' => $product
-        ], 201);
+    
+        try {
+            // Crear el producto
+            $product = Product::create($data);
+    
+            if ($product) {
+                // Si el producto fue creado, devolver un código 201
+                return response()->json([
+                    'message' => 'Successfully created product',
+                    'data' => $product
+                ], 201);
+            } else {
+                // Si no se pudo crear el producto
+                return response()->json([
+                    'message' => 'Product could not be created',
+                ], 500);
+            }
+        } catch (\Exception $e) {
+            // Capturar cualquier excepción y devolver el error
+            return response()->json([
+                'message' => 'Error: Unable to create product',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
+    
 
     public function Elements($product_id)
     {
